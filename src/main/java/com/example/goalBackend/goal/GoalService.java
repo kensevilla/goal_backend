@@ -20,7 +20,6 @@ public class GoalService {
         if (!goalRepository.existsById(id)) {
             throw new Exception("Goal id: " + id + " do not exist.");
         } else {
-            goalEntity.setId(id);
             return goalRepository.save(goalEntity);
         }
     }
