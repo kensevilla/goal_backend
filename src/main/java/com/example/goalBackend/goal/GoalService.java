@@ -23,14 +23,6 @@ public class GoalService {
         return goalRepository.save(goalEntity);
     }
 
-    public GoalEntity updateGoal(GoalEntity goalEntity, Long id) throws Exception {
-        if (!goalRepository.existsById(id)) {
-            throw new Exception("Goal id: " + id + " do not exist.");
-        } else {
-            return goalRepository.save(goalEntity);
-        }
-    }
-
     GoalEntity completeGoal(Long id) throws Exception {
         GoalEntity goalEntity = getGoal(id);
         goalEntity.setStatus(COMPLETED);
