@@ -33,6 +33,7 @@ public class GoalService {
     GoalEntity failGoal(Long id) throws Exception {
         GoalEntity goalEntity = getGoal(id);
         goalEntity.setStatus(FAIL);
+        goalEntity.setFinishDate(getCurrentDate());
         return goalRepository.save(goalEntity);
     }
 
