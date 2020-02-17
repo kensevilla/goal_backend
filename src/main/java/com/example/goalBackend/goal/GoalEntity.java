@@ -4,15 +4,23 @@ package com.example.goalBackend.goal;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "GOAL")
 public class GoalEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable=false)
     private Long id;
 
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
+
+    @Column(name = "TARGET_DATE", nullable = false)
     private String targetDate;
+
+    @Column(name = "FINISH_DATE", nullable = false)
     private String finishDate;
+
+    @Column(name = "STATUS", nullable = false)
     private String status;
 
     public Long getId() {
