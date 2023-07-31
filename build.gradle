@@ -18,7 +18,7 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: "org.flywaydb.flyway"
+//apply plugin: "org.flywaydb.flyway"
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -28,20 +28,20 @@ repositories {
 	mavenCentral()
 }
 
-flyway {
-	println "Environment is set to " + System.getenv('ENV')
-	url = 'jdbc:mysql://localhost:3306'
-	user = 'root'
-	password = ''
-	schemas = ['goal']
-}
+//flyway {
+//	println "Environment is set to " + System.getenv('ENV')
+//	url = 'jdbc:mysql://localhost:3306'
+//	user = 'root'
+//	password = 'root'
+//	schemas = ['goal']
+//}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.mariadb.jdbc:mariadb-java-client'
-	compileOnly 'org.flywaydb:flyway-core'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//	implementation 'org.mariadb.jdbc:mariadb-java-client'
+//	compileOnly 'org.flywaydb:flyway-core'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation('org.junit.jupiter:junit-jupiter-api:5.0.0')
 	testCompile('org.junit.jupiter:junit-jupiter-params:5.0.0')
@@ -49,7 +49,9 @@ dependencies {
 	testCompile 'org.assertj:assertj-core:3.10.0'
 	testCompile 'org.mockito:mockito-core:2.+'
 
-    runtime('mysql:mysql-connector-java:5.1.34')
+//    runtime('mysql:mysql-connector-java:5.1.34')
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	compileOnly 'org.projectlombok:lombok:1.18.28'
 }
 
 test {

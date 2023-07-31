@@ -1,6 +1,5 @@
 package com.example.goalBackend.goal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -9,38 +8,42 @@ import java.util.Date;
 
 @Service
 public class GoalService {
-    @Autowired
-    GoalRepository goalRepository;
+
+    private GoalRepository goalRepository;
+    public GoalService(GoalRepository goalRepository){
+        this.goalRepository = goalRepository;
+    }
+
 
     private final static String COMPLETED = "Completed";
     private final static String FAIL = "Fail";
 
-    Iterable<GoalEntity> getAll(){
+    Iterable<Goal> getAll(){
         return goalRepository.findAll();
     }
 
-    GoalEntity addGoal(GoalEntity goalEntity){
-        return goalRepository.save(goalEntity);
+    Goal addGoal(Goal goal){
+        return goalRepository.save(goal);
     }
 
-    GoalEntity completeGoal(Long id) throws Exception {
-        GoalEntity goalEntity = getGoal(id);
-        goalEntity.setStatus(COMPLETED);
-        goalEntity.setFinishDate(getCurrentDate());
-        return goalRepository.save(goalEntity);
+    Goal completeGoal(String id) throws Exception {
+        Goal goal = getGoal(id);
+        goal.setStatus(COMPLETED);
+        goal.setFinishDate(getCurrentDate());
+        return goalRepository.save(goal);
     }
 
-    GoalEntity failGoal(Long id) throws Exception {
-        GoalEntity goalEntity = getGoal(id);
-        goalEntity.setStatus(FAIL);
-        goalEntity.setFinishDate(getCurrentDate());
-        return goalRepository.save(goalEntity);
+    Goal failGoal(String id) throws Exception {
+        Goal goal = getGoal(id);
+        goal.setStatus(FAIL);
+        goal.setFinishDate(getCurrentDate());
+        return goalRepository.save(goal);
     }
 
-    GoalEntity moveGoal(Long id, String newTargetDate) throws Exception {
-        GoalEntity goalEntity = getGoal(id);
-        goalEntity.setTargetDate(newTargetDate);
-        return goalRepository.save(goalEntity);
+    Goal moveGoal(String id, String newTargetDate) throws Exception {
+        Goal goal = getGoal(id);
+        goal.setTargetDate(newTargetDate);
+        return goalRepository.save(goal);
     }
 
     private String getCurrentDate(){
@@ -49,7 +52,7 @@ public class GoalService {
         return dateFormat.format(date);
     }
 
-    private GoalEntity getGoal(Long id) throws Exception {
+    private Goal getGoal(String id) throws Exception {
         if (!goalRepository.existsById(id)) {
             throw new Exception("Goal id: " + id + " do not exist.");
         }

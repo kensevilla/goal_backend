@@ -15,28 +15,28 @@ public class GoalController {
     }
 
     @GetMapping(path = "/getAll", produces = {"application/json"})
-    public ResponseEntity<Iterable<GoalEntity>> getAll() {
+    public ResponseEntity<Iterable<Goal>> getAll() {
 
         return new ResponseEntity<>(goalService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(path="/addGoal", produces = {"application/json"})
-    public ResponseEntity<GoalEntity> addGoal(@RequestBody GoalEntity goalEntity){
-        return new ResponseEntity<>(goalService.addGoal(goalEntity),HttpStatus.CREATED);
+    public ResponseEntity<Goal> addGoal(@RequestBody Goal goal){
+        return new ResponseEntity<>(goalService.addGoal(goal),HttpStatus.CREATED);
     }
 
     @PostMapping(path="/completeGoal/{id}", produces = {"application/json"})
-    public ResponseEntity<GoalEntity> completeGoal(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Goal> completeGoal(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(goalService.completeGoal(id),HttpStatus.OK);
     }
 
     @PostMapping(path="/failGoal/{id}", produces = {"application/json"})
-    public ResponseEntity<GoalEntity> failGoal(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Goal> failGoal(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(goalService.failGoal(id),HttpStatus.OK);
     }
 
     @PostMapping(path="/moveGoal/{id}", produces = {"application/json"})
-    public ResponseEntity<GoalEntity> moveGoal(@RequestBody GoalEntity goalEntity, @PathVariable Long id) throws Exception {
-        return new ResponseEntity<>(goalService.moveGoal(id, goalEntity.getTargetDate()),HttpStatus.OK);
+    public ResponseEntity<Goal> moveGoal(@RequestBody Goal goal, @PathVariable String id) throws Exception {
+        return new ResponseEntity<>(goalService.moveGoal(id, goal.getTargetDate()),HttpStatus.OK);
     }
 }
