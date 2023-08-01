@@ -5,45 +5,44 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class GoalService {
 
-    private GoalRepository goalRepository;
-    public GoalService(GoalRepository goalRepository){
-        this.goalRepository = goalRepository;
-    }
+    private GoalFirebaseRepository goalFirebaseRepository = new GoalFirebaseRepository();
+
 
 
     private final static String COMPLETED = "Completed";
     private final static String FAIL = "Fail";
 
-    Iterable<Goal> getAll(){
-        return goalRepository.findAll();
+    Iterable<Goal> getAll() throws ExecutionException, InterruptedException {
+        return goalFirebaseRepository.getGoalsByUserId("1");
     }
 
-    Goal addGoal(Goal goal){
-        return goalRepository.save(goal);
+    Goal addGoal(Goal goal) throws ExecutionException, InterruptedException {
+        return goalFirebaseRepository.addGoal(goal);
     }
 
     Goal completeGoal(String id) throws Exception {
         Goal goal = getGoal(id);
         goal.setStatus(COMPLETED);
         goal.setFinishDate(getCurrentDate());
-        return goalRepository.save(goal);
+        return goalFirebaseRepository.updateGoal(goal);
     }
 
     Goal failGoal(String id) throws Exception {
         Goal goal = getGoal(id);
         goal.setStatus(FAIL);
         goal.setFinishDate(getCurrentDate());
-        return goalRepository.save(goal);
+        return goalFirebaseRepository.updateGoal(goal);
     }
 
     Goal moveGoal(String id, String newTargetDate) throws Exception {
         Goal goal = getGoal(id);
         goal.setTargetDate(newTargetDate);
-        return goalRepository.save(goal);
+        return goalFirebaseRepository.updateGoal(goal);
     }
 
     private String getCurrentDate(){
@@ -53,11 +52,6 @@ public class GoalService {
     }
 
     private Goal getGoal(String id) throws Exception {
-        if (!goalRepository.existsById(id)) {
-            throw new Exception("Goal id: " + id + " do not exist.");
-        }
-        else {
-            return goalRepository.findById(id).get();
-        }
+        return goalFirebaseRepository.getGoal(id);
     }
 }

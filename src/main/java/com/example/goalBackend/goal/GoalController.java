@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/goal")
@@ -15,13 +17,13 @@ public class GoalController {
     }
 
     @GetMapping(path = "/getAll", produces = {"application/json"})
-    public ResponseEntity<Iterable<Goal>> getAll() {
+    public ResponseEntity<Iterable<Goal>> getAll() throws ExecutionException, InterruptedException {
 
         return new ResponseEntity<>(goalService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(path="/addGoal", produces = {"application/json"})
-    public ResponseEntity<Goal> addGoal(@RequestBody Goal goal){
+    public ResponseEntity<Goal> addGoal(@RequestBody Goal goal) throws ExecutionException, InterruptedException {
         return new ResponseEntity<>(goalService.addGoal(goal),HttpStatus.CREATED);
     }
 
