@@ -16,10 +16,10 @@ public class GoalController {
         this.goalService = goalService;
     }
 
-    @GetMapping(path = "/getAll", produces = {"application/json"})
-    public ResponseEntity<Iterable<Goal>> getAll() throws ExecutionException, InterruptedException {
+    @GetMapping(path = "/getAll/{userId}", produces = {"application/json"})
+    public ResponseEntity<Iterable<Goal>> getAll(@PathVariable String userId) throws ExecutionException, InterruptedException {
 
-        return new ResponseEntity<>(goalService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(goalService.getAll(userId), HttpStatus.OK);
     }
 
     @PostMapping(path="/addGoal", produces = {"application/json"})

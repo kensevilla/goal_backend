@@ -10,15 +10,15 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class GoalService {
 
-    private GoalFirebaseRepository goalFirebaseRepository = new GoalFirebaseRepository();
+    private final GoalFirebaseRepository goalFirebaseRepository = new GoalFirebaseRepository();
 
 
 
     private final static String COMPLETED = "Completed";
     private final static String FAIL = "Fail";
 
-    Iterable<Goal> getAll() throws ExecutionException, InterruptedException {
-        return goalFirebaseRepository.getGoalsByUserId("1");
+    Iterable<Goal> getAll(String userId) throws ExecutionException, InterruptedException {
+        return goalFirebaseRepository.getGoalsByUserId(userId);
     }
 
     Goal addGoal(Goal goal) throws ExecutionException, InterruptedException {
